@@ -1,0 +1,42 @@
+name: Compilar Gaby Autotune (Mac)
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-mac:
+    runs-on: macos-14
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar (Intel + Apple Silicon)
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+
+      - name: Compilar
+        run: cmake --build build --config Release -j 4
+
+      - name: Firmar y empaquetar
+        run: |
+          mkdir -p paquete
+          AU=$(find build -name "Gaby Autotune.component" -type d | head -1)
+          VST3=$(find build -name "Gaby Autotune.vst3" -type d | head -1)
+          echo "AU:   $AU"
+          echo "VST3: $VST3"
+          codesign --force --deep --sign - "$AU"
+          codesign --force --deep --sign - "$VST3"
+          cp -R "$AU" paquete/
+          cp -R "$VST3" paquete/
+          cp INSTALAR.txt paquete/
+          ditto -c -k --sequesterRsrc --keepParent paquete "Gaby-Autotune-Mac.zip"
+
+      - name: Subir el plugin terminado
+        uses: actions/upload-artifact@v4
+        with:
+          name: Gaby-Autotune-Mac
+          path: Gaby-Autotune-Mac.zip
