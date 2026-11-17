@@ -1,0 +1,36 @@
+GABY AUTOTUNE - Cómo instalarlo en tu Mac
+==========================================
+
+1. Abre Finder y presiona  Cmd + Shift + G
+   Escribe:  /Library/Audio/Plug-Ins/
+   y presiona Enter.
+
+2. Copia los archivos así:
+   - "Gaby Autotune.component"  ->  dentro de la carpeta  Components
+   - "Gaby Autotune.vst3"       ->  dentro de la carpeta  VST3
+   (Mac te pedirá tu contraseña de la computadora; es normal.)
+
+3. Quita el bloqueo de seguridad de Mac (el plugin no está firmado por Apple).
+   Abre la app "Terminal" y pega estas dos líneas, una por una:
+
+   sudo xattr -dr com.apple.quarantine "/Library/Audio/Plug-Ins/Components/Gaby Autotune.component"
+   sudo xattr -dr com.apple.quarantine "/Library/Audio/Plug-Ins/VST3/Gaby Autotune.vst3"
+
+   (Te pide tu contraseña; al escribirla no se ven las letras, es normal.)
+
+4. Reinicia tu Mac (o cierra sesión y vuelve a entrar).
+
+5. Abre ACE Studio, ve a la pista de voz, agrega un efecto y busca
+   "Gaby Autotune" (fabricante: Gaby Records).
+
+CÓMO USARLO
+-----------
+- Arriba en el centro elige la TONALIDAD de tu canción (o toca la tecla en el teclado).
+- Elige la ESCALA: Mayor, Menor, etc. Si no sabes, usa CROMÁTICA.
+- VELOCIDAD en 0 ms = efecto tumbado / robótico.
+  Súbela a 50-150 ms para una afinación más natural.
+- HUMANIZE conserva el vibrato en notas largas.
+- MEZCLA: 100% = solo voz afinada.
+- El botón de encendido (arriba a la derecha) apaga/prende el efecto.
+
+Gaby Records - gabyrecords.com
